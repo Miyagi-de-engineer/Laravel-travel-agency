@@ -35,7 +35,7 @@
                 <button class="dropdown-item" type="button" onclick="location.href=''">
                     マイページ
                 </button>
-                <div class="dropdown-driver"></div>
+                <div class="dropdown-divider"></div>
                 <button form="logout-button" class="dropdown-item" type="submit">
                     ログアウト
                 </button>
