@@ -11,4 +11,5 @@
 |
 */
 
+Auth::routes();
 Route::get('/', 'ItemController@index');
