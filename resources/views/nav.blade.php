@@ -19,7 +19,7 @@
 
         @auth
         <li class="nav-item">
-            <a href="" class="nav-link"><i class="fas fa-flag-checkered"></i>登録する</a>
+            <a href="{{ route('items.create')}}" class="nav-link"><i class="fas fa-flag-checkered"></i>登録する</a>
         </li>
         @endauth
 
