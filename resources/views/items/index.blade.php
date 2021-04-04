@@ -41,7 +41,7 @@
                                     </span>
                                 </div>
                                 <div class="card-text mb-2">
-                                    カテゴリ：{{ $item->secondary_categories->name }}
+                                        カテゴリ：{{ $item->secondaryCategory->name }}
                                 </div>
                                 <div class="card-text mb-2">
                                     紹介文： {!! nl2br(e($item->description)) !!}

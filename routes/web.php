@@ -12,4 +12,6 @@
 */
 
 Auth::routes();
-Route::get('/', 'ItemController@index');
+Route::get('/', 'ItemController@index')->name('items.index');
+
+Route::resource('/items', 'ItemController')->except(['index'])->middleware('auth');
