@@ -35,7 +35,7 @@ class CreateItemsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('secondary_category_id');
             $table->string('title');
-            $table->string('image_file_name');
+            // $table->string('image_file_name');
             // $table->integer('category');
             $table->bigInteger('take_time');
             $table->bigInteger('capacity');

@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('title')
-    記事投稿
+    観光素材投稿
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
                 <div class="card mt-3">
                     <div class="card-body pt-0">
                         @include('error_card_list')
-                        <form action="{{ route('items.store')}}" method="post">
+                        <form action="{{ route('items.store')}}" method="post" enctype="multipart/form-data">
                             @include('items.form')
                             <button class="btn btn-block blue-gradient" type="submit">
                                 登録する

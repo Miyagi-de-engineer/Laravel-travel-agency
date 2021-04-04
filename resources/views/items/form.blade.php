@@ -4,19 +4,30 @@
     <input type="text" name="title" class="form-control" required value="{{ old('title')}}">
 </div>
 
-<!-- 紹介画像 -->
-<div class="form-group text-center">
+{{-- <!-- 紹介画像 -->
+<div class="form-group">
     紹介画像
-</div>
-    <input type="file" class="d-none" name="item-image" id="item-image" accept="image/png,image/jpeg,image/gif">
-    <img src="../../image/noimage.jpg" class="d-block m-auto" style="object-fit: cover;width:300px;height:300px;" alt="" id="item-image">
+</div> --}}
+{{-- <label for="item-image" role="button">
+    <input type="file" class="form-control" name="item-image" id="item-image" accept="image/png,image/jpeg,image/gif">
+    <img src="../../image/noimage.jpg" class="" style="object-fit: cover;width:300px;height:300px;" alt="">
+</label> --}}
 
+{{-- <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">画像</span>
+  </div>
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" name="item-image" id="item-image"　accept="image/png,image/jpeg,image/gif">
+    <label class="custom-file-label text-muted" for="item-image">画像を選択する（jpeg,png,gifのいずれか）</label>
+  </div>
+</div> --}}
 
 <!-- カテゴリ -->
 <div class="form-group">
     <label for="category">カテゴリ</label>
     <select name="category" id="category" class="form-select form-control">
-        @foreach ($categories as $category)
+        @foreach ($categories as $category)a
         <optgroup label="{{ $category->name }}">
             @foreach ($category->secondaryCategories as $secondary)
             <option value="{{$secondary->id}}" {{old('category') == $secondary->id ? 'selected' : ''}}>
