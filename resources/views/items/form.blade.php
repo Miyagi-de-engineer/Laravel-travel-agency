@@ -1,7 +1,7 @@
 @csrf
 <div class="md-form">
     <label for="title">タイトル</label>
-    <input type="text" name="title" class="form-control" required value="{{ old('title')}}">
+    <input type="text" name="title" class="form-control" required value="{{ $item->title ?? old('title')}}">
 </div>
 
 {{-- <!-- 紹介画像 -->
@@ -27,10 +27,10 @@
 <div class="form-group">
     <label for="category">カテゴリ</label>
     <select name="category" id="category" class="form-select form-control">
-        @foreach ($categories as $category)a
+        @foreach ($categories as $category)
         <optgroup label="{{ $category->name }}">
             @foreach ($category->secondaryCategories as $secondary)
-            <option value="{{$secondary->id}}" {{old('category') == $secondary->id ? 'selected' : ''}}>
+            <option value="{{$secondary->id}}" {{old('category',$item->secondary_category_id) == $secondary->id ? 'selected' : ''}}>
                 {{ $secondary->name }}
             </option>
             @endforeach
@@ -42,15 +42,15 @@
 <!-- 所要時間 -->
 <div class="form-group">
     <label for="take_time">所要時間</label>
-    <input type="number" class="form-control" name="take_time" id="take_time" required value="{{ old('take_time') }}" min="0">
+    <input type="number" class="form-control" name="take_time" id="take_time" required value="{{$item->take_time ?? old('take_time') }}" min="0">
 </div>
 <!-- 受入可能人数 -->
 <div class="form-group">
     <label for="capacity">受入可能人数</label>
-    <input type="number" class="form-control" name="capacity" id="capacity" required value="{{ old('capacity') }}" min="0">
+    <input type="number" class="form-control" name="capacity" id="capacity" required value="{{$item->capacity ?? old('capacity') }}" min="0">
 </div>
 <!-- 内容 -->
 <div class="form-group">
     <label for="description">内容</label>
-    <textarea class="form-control" name="description" id="description" rows="16">{{ old('description') }}</textarea>
+    <textarea class="form-control" name="description" id="description" rows="16">{{$item->description ?? old('description') }}</textarea>
 </div>

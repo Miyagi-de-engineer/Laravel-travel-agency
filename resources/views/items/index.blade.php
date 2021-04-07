@@ -32,6 +32,63 @@
                                         {{ $item->created_at->format('Y/m/d H:i') }}
                                     </div>
                                 </div>
+
+                                @if (Auth::id() === $item->user_id)
+                                    <!-- Dropdown -->
+                                    <div class="ml-auto card-text">
+                                        <div class="dropdown">
+                                            <a data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false">
+                                                <button class="btn btn-link text-muted m-0 p-2">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a href="{{ route('items.edit',['item' => $item])}}" class="dropdown-item">
+                                                    <i class="fas fa-pen mr-1"></i>素材を更新する
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item text-danger"
+                                                data-toggle="modal" data-target="#modal-delete-{{ $item->id }}">
+                                                <i class="fas fa-trash-alt mr-1"></i>記事を削除する
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Dropdown -->
+
+                                    <!-- Modal -->
+                                    <div id="modal-delete-{{$item->id}}" class="modal fade" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button class="close" type="button"
+                                                    data-dismiss="modal" aria-label="閉じる">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form action="{{ route('items.destroy',['item' => $item])}}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <div class="modal-body">
+                                                        {{$item->title}}を削除します。よろしいですか？
+                                                    </div>
+                                                    <div class="modal-footer justify-content-between">
+                                                        <a class="btn btn-outline-grey" data-dismiss="modal">
+                                                            キャンセル
+                                                        </a>
+                                                        <button class="btn btn-danger" type="submit">
+                                                            削除する
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal -->
+                                @endif
+
                             </div>
                             <div class="card-body pt-0 pb-2">
                                 <img class="card-img-top" src="image/noimage.jpg" alt="">

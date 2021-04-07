@@ -9,6 +9,7 @@ use App\Models\SecondaryCategory;
 use App\Http\Requests\ItemRequest;
 use Illuminate\Http\Request;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -40,12 +41,13 @@ class ItemController extends Controller
 
         // $imageName = $this->saveImage($request->file('item-image'));
 
-        $item->title = $request->title;
+        // $item->title = $request->title;
         // $item->image_file_name = $imageName;
-        $item->secondary_category_id = $request->input('category');
-        $item->take_time = $request->take_time;
-        $item->capacity = $request->capacity;
-        $item->description = $request->description;
+        // $item->secondary_category_id = $request->input('category');
+        // $item->take_time = $request->take_time;
+        // $item->capacity = $request->capacity;
+        // $item->description = $request->description;
+        $item->fill($request->all());
         $item->user_id = $request->user()->id;
         $item->save();
         return redirect()->route('items.index');
@@ -79,4 +81,24 @@ class ItemController extends Controller
     //     $meta   = stream_get_meta_data($tmp_fp);
     //     return $meta["uri"];
     // }
+
+    public function edit(Item $item)
+    {
+        $categories = PrimaryCategory::orderBy('sort_no')->get();
+
+        return view('items.edit', ['item' => $item])
+            ->with('categories', $categories);
+    }
+
+    public function update(ItemRequest $request, Item $item)
+    {
+        $item->fill($request->all())->save();
+        return redirect()->route('items.index');
+    }
+
+    public function destroy(Item $item)
+    {
+        $item->delete();
+        return redirect()->route('items.index');
+    }
 }
