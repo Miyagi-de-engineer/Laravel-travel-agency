@@ -28,6 +28,7 @@ class ItemRequest extends FormRequest
         return [
             'title'       => 'required|max:50',
             // 'item-image'  => 'required|file|image',
+            'category'    => 'required|integer',
             'take_time'   => 'required|integer|min:0|max:600',
             'capacity'    => 'required|integer|min:0|max:30000',
             'description' => 'nullable|string|max:1000',
@@ -38,6 +39,7 @@ class ItemRequest extends FormRequest
         return [
             'title'       => 'タイトル',
             // 'item-image'  => '紹介画像',
+            'category'    => 'カテゴリー',
             'take_time'   => '所要時間',
             'capacity'    => '受入可能人数',
             'description' => '内容',
