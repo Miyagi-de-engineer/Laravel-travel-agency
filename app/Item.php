@@ -24,6 +24,6 @@ class Item extends Model
 
     public function secondaryCategory()
     {
-        return $this->belongsTo(SecondaryCategory::class);
+        return $this->belongsTo(SecondaryCategory::class, 'secondary_category_id');
     }
 }

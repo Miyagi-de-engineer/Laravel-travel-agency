@@ -17,6 +17,12 @@ use Intervention\Image\Facades\Image;
 
 class ItemController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(Item::class, 'item');
+    }
+
     public function index()
     {
         $categories = SecondaryCategory::orderBy('sort_no')->get();
@@ -28,11 +34,12 @@ class ItemController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(Item $item)
     {
         $categories = PrimaryCategory::orderBy('sort_no')->get();
 
         return view('items.create')
+            ->with('item', $item)
             ->with('categories', $categories);
     }
 
@@ -40,14 +47,13 @@ class ItemController extends Controller
     {
 
         // $imageName = $this->saveImage($request->file('item-image'));
-
-        // $item->title = $request->title;
         // $item->image_file_name = $imageName;
-        // $item->secondary_category_id = $request->input('category');
-        // $item->take_time = $request->take_time;
-        // $item->capacity = $request->capacity;
-        // $item->description = $request->description;
-        $item->fill($request->all());
+
+        $item->title = $request->title;
+        $item->secondary_category_id = $request->input('category');
+        $item->take_time = $request->take_time;
+        $item->capacity = $request->capacity;
+        $item->description = $request->description;
         $item->user_id = $request->user()->id;
         $item->save();
         return redirect()->route('items.index');
@@ -92,7 +98,12 @@ class ItemController extends Controller
 
     public function update(ItemRequest $request, Item $item)
     {
-        $item->fill($request->all())->save();
+        $item->title = $request->title;
+        $item->secondary_category_id = $request->input('category');
+        $item->take_time = $request->take_time;
+        $item->capacity = $request->capacity;
+        $item->description = $request->description;
+        $item->save();
         return redirect()->route('items.index');
     }
 
@@ -100,5 +111,12 @@ class ItemController extends Controller
     {
         $item->delete();
         return redirect()->route('items.index');
+    }
+
+    public function show(Item $item)
+    {
+        // $categories = PrimaryCategory::orderBy('sort_no')->get();
+
+        return view('items.show', ['item' => $item]);
     }
 }

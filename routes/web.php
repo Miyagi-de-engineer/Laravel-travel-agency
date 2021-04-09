@@ -15,3 +15,4 @@ Auth::routes();
 Route::get('/', 'ItemController@index')->name('items.index');
 
 Route::resource('/items', 'ItemController')->except(['index'])->middleware('auth');
+Route::resource('/items', 'ItemController')->only(['show']);
