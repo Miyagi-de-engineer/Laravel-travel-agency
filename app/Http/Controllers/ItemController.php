@@ -119,4 +119,25 @@ class ItemController extends Controller
 
         return view('items.show', ['item' => $item]);
     }
+
+    public function like(Request $request, Item $item)
+    {
+        $item->likes()->detach($request->user()->id);
+        $item->likes()->attach($request->user()->id);
+
+        return [
+            'id' => $item->id,
+            'countLikes' => $item->count_likes,
+        ];
+    }
+
+    public function unlike(Request $request, Item $item)
+    {
+        $item->likes()->detach($request->user()->id);
+
+        return [
+            'id' => $item->id,
+            'countLikes' => $item->count_likes,
+        ];
+    }
 }
