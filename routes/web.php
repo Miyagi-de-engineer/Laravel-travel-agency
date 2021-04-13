@@ -14,5 +14,10 @@
 Auth::routes();
 Route::get('/', 'ItemController@index')->name('items.index');
 
-Route::resource('/items', 'ItemController')->except(['index'])->middleware('auth');
+Route::resource('/items', 'ItemController')->except(['index', 'show'])->middleware('auth');
 Route::resource('/items', 'ItemController')->only(['show']);
+
+Route::prefix('items')->name('items.')->group(function () {
+    Route::put('/{item}/like', 'ItemController@like')->name('like')->middleware('auth');
+    Route::delete('/{item}/like', 'ItemController@unlike')->name('unlike')->middleware('auth');
+});
