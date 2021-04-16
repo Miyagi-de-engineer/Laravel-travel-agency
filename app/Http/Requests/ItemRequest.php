@@ -27,6 +27,7 @@ class ItemRequest extends FormRequest
     {
         return [
             'title'       => 'required|max:50',
+            'tags'        => 'json|regex:/^(?!.*\s).+$/u|regex:/^(?!.*\/).*$/u',
             // 'item-image'  => 'required|file|image',
             'category'    => 'required|integer',
             'take_time'   => 'required|integer|min:0|max:600',
@@ -38,11 +39,21 @@ class ItemRequest extends FormRequest
     {
         return [
             'title'       => 'タイトル',
+            'tags'        => 'タグ',
             // 'item-image'  => '紹介画像',
             'category'    => 'カテゴリー',
             'take_time'   => '所要時間',
             'capacity'    => '受入可能人数',
             'description' => '内容',
         ];
+    }
+
+    public function passedValidation()
+    {
+        $this->tags = collect(json_decode($this->tags))
+            ->slice(0, 5)
+            ->map(function ($requestTag) {
+                return $requestTag->text;
+            });
     }
 }

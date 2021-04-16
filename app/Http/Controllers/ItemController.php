@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Item;
+use App\Tag;
 use App\Models\PrimaryCategory;
 use App\Models\SecondaryCategory;
 
@@ -37,10 +38,15 @@ class ItemController extends Controller
     public function create(Item $item)
     {
         $categories = PrimaryCategory::orderBy('sort_no')->get();
+        $allTagNames = Tag::all()->map(function ($tag) {
+            return ['text' => $tag->name];
+        });
 
-        return view('items.create')
-            ->with('item', $item)
-            ->with('categories', $categories);
+        return view('items.create', [
+            'allTagNames' => $allTagNames,
+            'item'        => $item,
+            'categories'  => $categories,
+        ]);
     }
 
     public function store(ItemRequest $request, Item $item)
@@ -56,6 +62,12 @@ class ItemController extends Controller
         $item->description = $request->description;
         $item->user_id = $request->user()->id;
         $item->save();
+
+        $request->tags->each(function ($tagName) use ($item) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $item->tags()->attach($tag);
+        });
+
         return redirect()->route('items.index');
     }
 
@@ -90,10 +102,22 @@ class ItemController extends Controller
 
     public function edit(Item $item)
     {
+        $tagNames = $item->tags->map(function ($tag) {
+            return ['text' => $tag->name];
+        });
+
+        $allTagNames = Tag::all()->map(function ($tag) {
+            return ['text' => $tag->name];
+        });
+
         $categories = PrimaryCategory::orderBy('sort_no')->get();
 
-        return view('items.edit', ['item' => $item])
-            ->with('categories', $categories);
+        return view('items.edit', [
+            'item'        => $item,
+            'tagNames'    => $tagNames,
+            'allTagNames' => $allTagNames,
+            'categories'  => $categories,
+        ]);
     }
 
     public function update(ItemRequest $request, Item $item)
@@ -104,6 +128,12 @@ class ItemController extends Controller
         $item->capacity = $request->capacity;
         $item->description = $request->description;
         $item->save();
+
+        $item->tags()->detach();
+        $request->tags->each(function ($tagName) use ($item) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $item->tags()->attach($tag);
+        });
         return redirect()->route('items.index');
     }
 
