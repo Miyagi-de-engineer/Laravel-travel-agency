@@ -4,6 +4,14 @@
     <input type="text" name="title" class="form-control" required value="{{ $item->title ?? old('title')}}">
 </div>
 
+<div class="form-group">
+    <item-tags-input
+    :initial-tags='@json($tagNames??[])'
+    :autocomplete-items='@json($allTagNames??[])'>
+
+    </item-tags-input>
+</div>
+
 {{-- <!-- 紹介画像 -->
 <div class="form-group">
     紹介画像

@@ -21,3 +21,4 @@ Route::prefix('items')->name('items.')->group(function () {
     Route::put('/{item}/like', 'ItemController@like')->name('like')->middleware('auth');
     Route::delete('/{item}/like', 'ItemController@unlike')->name('unlike')->middleware('auth');
 });
+Route::get('/tags/{name}', 'TagController@show')->name('tags.show');

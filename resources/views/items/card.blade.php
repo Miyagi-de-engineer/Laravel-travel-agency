@@ -1,17 +1,17 @@
 <div class="col-4 my-3">
-                    <div class="card">
-                            <div class="card-body d-flex flex-row">
-                                <i class="fas fa-user-circle fa-3x mr-1"></i>
-                                <div>
-                                    <div class="font-weight-bold">
-                                        {{ $item->user->name }}
-                                    </div>
-                                    <div class="font-weight-lighter">
-                                        {{ $item->created_at->format('Y/m/d H:i') }}
-                                    </div>
-                                </div>
+    <div class="card">
+        <div class="card-body d-flex flex-row">
+            <i class="fas fa-user-circle fa-3x mr-1"></i>
+                <div>
+                    <div class="font-weight-bold">
+                        {{ $item->user->name }}
+                    </div>
+                    <div class="font-weight-lighter">
+                        {{ $item->created_at->format('Y/m/d H:i') }}
+                    </div>
+                </div>
 
-                                @if (Auth::id() === $item->user_id)
+                @if (Auth::id() === $item->user_id)
                                     <!-- Dropdown -->
                                     <div class="ml-auto card-text">
                                         <div class="dropdown">
@@ -67,8 +67,8 @@
                                     <!-- Modal -->
                                 @endif
 
-                            </div>
-                            <div class="card-body pt-0 pb-2">
+        </div>
+        <div class="card-body pt-0 pb-2">
                                 <a href="{{route('items.show',['item' => $item])}}" class="text-dark">
                                     <img class="card-img-top" src="image/noimage.jpg" alt="">
                                     <div class="py-2 px-3 mb-2" style="left: 0;bottom:20px;color:white;background-color:rgba(0, 0, 0, 0.7)">
@@ -94,6 +94,19 @@
 
                                     <item-like>
                                 </div>
-                            </div>
-                    </div>
-                </div>
+        </div>
+
+                            @foreach ($item->tags as $tag)
+                                @if ($loop->first)
+                                    <div class="card-body pt-0 pb-4 pl-3">
+                                        <div class="card-text line-height">
+                                            @endif
+                                            <a href="{{ route('tags.show',['name' => $tag->name]) }}"
+                                                class="border p-1 mr-1 mt-1 text-muted">{{ $tag->hashtag }}</a>
+                                            @if ($loop->last)
+                                        </div>
+                                    </div>
+                                    @endif
+                            @endforeach
+    </div>
+</div>
