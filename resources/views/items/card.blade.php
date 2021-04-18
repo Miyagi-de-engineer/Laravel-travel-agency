@@ -1,10 +1,14 @@
 <div class="col-4 my-3">
     <div class="card">
         <div class="card-body d-flex flex-row">
-            <i class="fas fa-user-circle fa-3x mr-1"></i>
+            <a href="{{ route('users.show',['name' => $item->user->name]) }}" class="text-dark">
+                <i class="fas fa-user-circle fa-3x mr-1"></i>
+            </a>
                 <div>
                     <div class="font-weight-bold">
-                        {{ $item->user->name }}
+                        <a href="{{ route('users.show',['name' => $item->user->name]) }}" class="text-dark">
+                            {{ $item->user->name }}
+                        </a>
                     </div>
                     <div class="font-weight-lighter">
                         {{ $item->created_at->format('Y/m/d H:i') }}
