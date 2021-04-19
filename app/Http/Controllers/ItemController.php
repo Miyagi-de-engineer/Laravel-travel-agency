@@ -27,7 +27,10 @@ class ItemController extends Controller
     public function index()
     {
         $categories = SecondaryCategory::orderBy('sort_no')->get();
-        $items = Item::all()->sortByDesc('created_at');
+        $items = Item::all()->sortByDesc('created_at')
+            ->load([
+                'user', 'tags', 'likes',
+            ]);
 
         return view('items.index', [
             'categories' => $categories,
